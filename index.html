@@ -618,28 +618,44 @@
           </div>
         </div>
       </div>
-      <form action="forms/contact.php" method="post" role="form" class="php-email-form mt-4">
-        <div class="row">
-          <div class="col-md-6 form-group">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-          </div>
-          <div class="col-md-6 form-group mt-3 mt-md-0">
-            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-          </div>
-        </div>
-        <div class="form-group mt-3">
-          <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-        </div>
-        <div class="form-group mt-3">
-          <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-        </div>
-        <div class="my-3">
-          <div class="loading">Loading</div>
-          <div class="error-message"></div>
-          <div class="sent-message">Your message has been sent. Thank you!</div>
-        </div>
-        <div class="text-center"><button type="submit">Send Message</button></div>
-      </form>
+      <form id="contact-form" style="max-width: 400px; margin: 0 auto;">
+        <label for="name">Your Name:</label><br>
+        <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
+        
+        <label for="email">Your Email:</label><br>
+        <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 10px;"><br>
+        
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" required style="width: 100%; padding: 10px; margin-bottom: 10px;"></textarea><br>
+        
+        <input type="submit" value="Send" style="background-color: #0078D4; color: #ffffff; border: none; padding: 10px 20px; cursor: pointer;">
+    </form>
+    
+
+    <!-- Include EmailJS SDK -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your User ID
+        emailjs.init('WZawqmV08XgvK1Pkd');
+        
+        // Function to send the email
+        function sendEmail(e) {
+            e.preventDefault();
+            
+            emailjs.sendForm('service_l7v7mhk', 'template_dmpads8', '#contact-form')
+                .then(function(response) {
+                    console.log('Email sent successfully!', response.status, response.text);
+                    alert('Your message has been sent successfully. We will contact you shortly.');
+                }, function(error) {
+                    console.error('Error sending email:', error);
+                    alert('Oops! Something went wrong. Please try again later.');
+                });
+        }
+        
+        // Add event listener for the form submission
+        document.getElementById('contact-form').addEventListener('submit', sendEmail);
+    </script>
+
     </div>
   </section>
 
